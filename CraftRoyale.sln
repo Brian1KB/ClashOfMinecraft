@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CraftRoyale", "ClashOfMinecraft\CraftRoyale.csproj", "{BDEBA2B8-B4B2-4149-99A0-FD028C31D9BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDEBA2B8-B4B2-4149-99A0-FD028C31D9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEBA2B8-B4B2-4149-99A0-FD028C31D9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDEBA2B8-B4B2-4149-99A0-FD028C31D9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDEBA2B8-B4B2-4149-99A0-FD028C31D9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
