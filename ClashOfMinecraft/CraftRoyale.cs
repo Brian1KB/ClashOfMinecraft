@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Timers;
 using log4net;
 using MiNET;
@@ -19,15 +17,15 @@ namespace ClashOfMinecraft
 
         public void Configure(MiNetServer server)
         {
-            Log.Info("Startup began.");
+            Log.Info("Startup begun.");
 
             server.MotdProvider = new CrMotdProvider();
             server.PlayerFactory = new CrPlayerFactory();
             server.LevelManager = new CrLevelManager();
 
             _queueTimer = new Timer();
-            _queueTimer.Elapsed += new ElapsedEventHandler(HandleQueue);
-            _queueTimer.Interval = 100;
+            _queueTimer.Elapsed += HandleQueue;
+            _queueTimer.Interval = 1000;
             _queueTimer.Enabled = true;
 
             Log.Info("Startup complete.");
@@ -59,28 +57,16 @@ namespace ClashOfMinecraft
         {
             Task.Run(delegate
             {
-//                _queueTimer.Enabled = false;
-                Stopwatch watch = new Stopwatch();
-                watch.Start();
                 var response = CrApiWrapper.BattleStart(1);
 
                 if (Context.LevelManager.Levels.Count > 0)
                 {
                     if (response.StatusCode == 0)
                     {
-                        var crLevelManager = (CrLevelManager)Context.LevelManager;
-                        var playerOne = crLevelManager.GetPlayer(response.PlayerName1);
-                        var playerTwo = crLevelManager.GetPlayer(response.PlayerName2);
-
-                        if (playerOne == null || playerTwo == null) return;
-
-                        new CrBattle(_levelFactory, response, playerOne, playerTwo, Context.LevelManager.Levels[0]);
+                        var battle = new CrBattle(_levelFactory, (CrLevelManager) Context.LevelManager, response);
+                        battle.StartBattle();
                     }
                 }
-
-                Console.WriteLine("[Performance Check][HandleQueue] Task elapsed time: " + watch.ElapsedMilliseconds);
-                watch.Stop();
-            //    _queueTimer.Enabled = true;
             });
         }
 
@@ -98,9 +84,7 @@ namespace ClashOfMinecraft
                 CrApiWrapper.BattleQueuePlayer(player.Username, 1, true);
             });
 
-            player.SendMessage(ChatColors.Yellow + "Joined " + ChatColors.Aqua + "CraftRoyale" + ChatColors.Yellow +
-                               " queue");
-            
+            player.SendMessage(ChatColors.Yellow + "Joined " + ChatColors.Aqua + "CraftRoyale" + ChatColors.Yellow + " queue");
         }
     }
 }

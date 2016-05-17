@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
 using Newtonsoft.Json;
 
@@ -68,8 +67,6 @@ namespace ClashOfMinecraft
             };
 
             var response = client.GetAsync("?action=BattleEnd&WinnerPlayerName=" + winnerUsername + "&ServerID=" + serverId + "&BattleID=" + battleId).Result;
-
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
 
             return JsonConvert.DeserializeObject<BattleEndResponse>(response.Content.ReadAsStringAsync().Result);
         }

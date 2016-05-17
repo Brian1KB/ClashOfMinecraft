@@ -78,13 +78,18 @@ namespace ClashOfMinecraft
             base.Disconnect(reason, sendDisconnect);
         }
 
+        internal void SetBattleNameTag()
+        {
+            SetNameTag(TextUtils.Center(ChatColors.DarkGray + "» " + ColouredRank + ChatColors.DarkGray + " « " + ChatColors.Yellow + Username + "\n" + ChatColors.Green + ChatColors.Red + "20" + ChatColors.Green + " Hearts"));
+        }
+
         protected override bool AcceptPlayerMove(McpeMovePlayer message)
         {
             if (IsInBattle())
             {
                 var battle = GetBattle();
 
-                if (battle._startTimer != null)
+                if (battle.BattleTimer != null)
                 {
                     SetPosition(KnownPosition, false);
                     return false;
@@ -138,6 +143,19 @@ namespace ClashOfMinecraft
                     }
                     break;
             }
+        }
+
+        internal void SetHubNameTag()
+        {
+            SetNameTag(ChatColors.DarkGray + "» " + ColouredRank + ChatColors.DarkGray + " « " + ChatColors.Yellow + Username);
+        }
+
+        internal void SetExperience(int experienceLevel, float experience)
+        {
+            ExperienceLevel = experienceLevel;
+            Experience = experience;
+
+            SendUpdateAttributes();
         }
 
         protected override void HandleInteract(McpeInteract message)

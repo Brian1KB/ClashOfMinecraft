@@ -1,9 +1,10 @@
-﻿using ClashOfMinecraft.Items;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ClashOfMinecraft.Items;
 using fNbt;
 using MiNET;
 using MiNET.Effects;
 using MiNET.Items;
-using MiNET.Utils;
 
 namespace ClashOfMinecraft
 {
@@ -53,7 +54,7 @@ namespace ClashOfMinecraft
             return item;
         }
 
-        public static void ApplyItemEffects(CrItem item, Player player)
+        public static void ApplyItemEffects(Player player, CrItem item)
         {
             switch (int.Parse(item.ID))
             {
@@ -65,6 +66,44 @@ namespace ClashOfMinecraft
                     });
                     break;
             }
+        }
+
+        internal static void ApplyItemsEffects(CrPlayer player, List<CrItem> playerItems)
+        {
+            foreach (var item in playerItems)
+            {
+                ApplyItemEffects(player, item);
+            }
+        }
+
+        internal static void BuildItems(CrPlayer player, List<CrItem> playerItems)
+        {
+            foreach (var crItem in playerItems)
+            {
+                var item = BuildItem(crItem);
+
+                switch (item.ItemType)
+                {
+                    case ItemType.Helmet:
+                        player.Inventory.Helmet = item;
+                        break;
+                    case ItemType.Chestplate:
+                        player.Inventory.Chest = item;
+                        break;
+                    case ItemType.Leggings:
+                        player.Inventory.Leggings = item;
+                        break;
+                    case ItemType.Boots:
+                        player.Inventory.Boots = item;
+                        break;
+                    default:
+                        player.Inventory.SetFirstEmptySlot(item, true, false);
+                        break;
+                }
+            }
+
+            player.SendPlayerInventory();
+            player.SendArmorForPlayer(player.Level.Players.Values.ToArray());
         }
     }
 }

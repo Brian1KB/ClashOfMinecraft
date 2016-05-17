@@ -79,7 +79,7 @@
     <Compile Include="CraftRoyale.cs" />
     <Compile Include="CrBattle.cs" />
     <Compile Include="CrCooldownTimer.cs" />
-    <Compile Include="MapConfiguration.cs" />
+    <Compile Include="SpawnLocations.cs" />
     <Compile Include="Projectiles\CrSnowball.cs" />
     <Compile Include="Projectiles\CrArrow.cs" />
     <Compile Include="Items\CrBombItem.cs" />
